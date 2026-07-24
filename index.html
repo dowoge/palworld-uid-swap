@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Palworld UID Swap</title>
+  <meta name="description" content="Swap player UIDs in Palworld saves. 100% in your browser. Files never leave your machine." />
+  <link rel="stylesheet" href="./src/style.css" />
+</head>
+<body>
+
+  <h1>Palworld UID Swap</h1>
+
+  <p>Re-ID the players in a Palworld world (host swaps, character transfers, co-op to dedicated migrations). It patches the GUID bytes in place and re-compresses each file to its original format.</p>
+  <p>100% in your browser. Files never leave your machine.</p>
+
+  <h2>1. Load save files</h2>
+  <p>Two pickers, each strict about what it accepts. Load this world's <code>Level.sav</code> with the first, and the <code>Players/&lt;uid&gt;.sav</code> files you want to re-ID with the second.</p>
+
+  <div id="dropzone" aria-label="Drop .sav files here">
+    Drag .sav files here, or use the pickers below.
+
+    <div class="picker">
+      <label for="levelInput">Choose Level.sav</label>
+      <input id="levelInput" type="file" accept=".sav" />
+      <div id="levelErr" aria-live="polite"></div>
+    </div>
+
+    <div class="picker">
+      <label for="playerInput">Add player saves (Players/*.sav)</label>
+      <input id="playerInput" type="file" multiple accept=".sav" />
+      <div id="playerErr" aria-live="polite"></div>
+    </div>
+  </div>
+
+  <div id="fileList" aria-live="polite"></div>
+
+  <div id="mapSection" class="is-hidden">
+    <h2>2. Assign new UIDs</h2>
+    <p>Type the target UID for each player (32 hex characters, or the dashed form). Unchanged rows are skipped.</p>
+    <div id="mapTools"></div>
+    <div id="banners" aria-live="polite"></div>
+    <div id="mapRows"></div>
+  </div>
+
+  <div id="deploySection" class="is-hidden">
+    <h2>3. Swap &amp; download</h2>
+    <p>Applies your mapping to every loaded file, re-compresses to each file's original format, and names the outputs for you.</p>
+    <button id="swapBtn" type="button">Swap IDs</button>
+    <div id="results" aria-live="polite" role="status"></div>
+  </div>
+
+  <h2>How to apply the downloads</h2>
+  <ol>
+    <li><b>Back up your entire save folder first.</b> Copy the whole world folder somewhere safe before touching anything.</li>
+    <li>Find your save folder:
+      <ul>
+        <li>Steam / Windows: <code>C:\Users\&lt;you&gt;\AppData\Local\Pal\Saved\SaveGames\&lt;steamid&gt;\&lt;world&gt;\</code></li>
+        <li>Steam Deck / Proton: <code>…/steamapps/compatdata/&lt;appid&gt;/pfx/drive_c/users/steamuser/AppData/Local/Pal/Saved/SaveGames/&lt;steamid&gt;/&lt;world&gt;/</code></li>
+        <li>Dedicated server: <code>Pal/Saved/SaveGames/0/&lt;world&gt;/</code></li>
+      </ul>
+    </li>
+    <li>Replace <code>Level.sav</code> and the <code>Players/*.sav</code> files with the downloads. The player files are already renamed to their new UIDs. Drop them into <code>Players/</code> and delete the old-named ones.</li>
+    <li>Launch the world. Every player keeps everything (inventory, pals, bases, unlocks). Only the ownership IDs change.</li>
+  </ol>
+
+  <h2>Built on the work of</h2>
+  <ul>
+    <li><a href="https://github.com/cheahjs/palworld-save-tools">cheahjs/palworld-save-tools</a>: GVAS format research</li>
+    <li><a href="https://github.com/deafdudecomputers/PalworldSaveTools">deafdudecomputers/PalworldSaveTools</a>: updated palsav + PlM/Oodle</li>
+    <li><a href="https://github.com/powzix/ooz">powzix/ooz</a>: open-source Oodle codec</li>
+    <li><a href="https://github.com/xNul/palworld-host-save-fix">xNul/palworld-host-save-fix</a>: original host-fix workflow</li>
+  </ul>
+
+  <p>
+    <a href="https://github.com/dowoge/palworld-uid-swap">Source on GitHub</a>
+  </p>
+
+  <script type="module" src="./src/app.js"></script>
+</body>
+</html>

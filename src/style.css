@@ -1,0 +1,17 @@
+/* Explicit solid colors; color-scheme keeps form controls matching, but the
+   background never follows the OS/GTK accent theme. */
+:root { color-scheme: light dark; }
+body { background: #ffffff; color: #000000; }
+@media (prefers-color-scheme: dark) {
+  body { background: #1b1b1b; color: #e6e6e6; }
+}
+
+body { max-width: 60em; margin: 1em auto; padding: 0 1em; font-family: sans-serif; }
+
+.is-hidden { display: none; }
+
+code, .uid-display, .uid-input, .badge { font-family: monospace; }
+
+a { color: inherit; }
+
+.err, .st-err, .st-warn, .fc-note.err, .mr-msg.err, .banner.err, .uid-input.invalid { color: red; }
